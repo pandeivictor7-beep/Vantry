@@ -274,5 +274,26 @@ padding-bottom:calc(20px + env(safe-area-inset-bottom))}
 <div id="toast" role="status" aria-live="polite"></div>
 
 <script src="app.js"></script>
+ // Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyBJXWMVvvHSlO4GWCnBQDeHXHxRtzLC2uA",
+  authDomain: "vantry-200d3.firebaseapp.com",
+  projectId: "vantry-200d3",
+  storageBucket: "vantry-200d3.firebasestorage.app",
+  messagingSenderId: "787639375643",
+  appId: "1:787639375643:web:5056ecb877eeedcdf965be",
+  measurementId: "G-8NNJPV20D8"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 </body>
 </html>
