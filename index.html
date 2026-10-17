@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -16,40 +16,57 @@
             margin: 0; min-height: 100%; background: var(--bg); color: var(--text);
             font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
         }
-        body { padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
-        button, input, textarea, select { font: inherit; }
+        body { padding-bottom: 90px; }
+        button, input, textarea { font: inherit; }
         button { cursor: pointer; }
+        
         .topbar {
             height: 62px; padding: 0 16px; display: flex; align-items: center;
             justify-content: space-between; background: var(--bg);
             position: sticky; top: 0; z-index: 10; border-bottom: 1px solid #ffffff0b;
         }
         .brand { font-size: 23px; font-weight: 850; letter-spacing: -.6px; color: var(--accent); }
-        .main { width: 100%; padding: 12px 24px; margin: 0 auto; }
-        .cardbackground { background: var(--panel); border: 1px solid #ffffff0b; border-radius: 19px; padding: 14px; margin-bottom: 12px; }
-        .stories { display: flex; gap: 12px; overflow-x: auto; padding: 3px 1px 12px; }
-        .stories::-webkit-scrollbar { display: none; }
-        .story-ring {
-            width: 68px; height: 68px; margin: 0 auto; padding: 3px; border-radius: 50%;
-            background: linear-gradient(135deg, #c29aff, #7957ff, #ff7cbb);
+        
+        .main-content { width: 100%; padding: 12px 24px; margin: 0 auto; max-width: 600px; }
+        .page-view { display: none; }
+        .page-view.active { display: block; }
+        .cardbackground { background: var(--panel); border: 1px solid #ffffff0b; border-radius: 19px; padding: 16px; margin-bottom: 16px; }
+        
+        /* Bottom Tab Navigation Matrix */
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; right: 0; height: 70px;
+            background: var(--panel); border-top: 1px solid var(--line);
+            display: flex; justify-content: space-around; align-items: center; z-index: 100;
         }
-        .story-inner { height: 100%; width: 100%; color: #fff; border-radius: 50%; border: 3px solid var(--bg); background: var(--card); display: flex; align-items: center; justify-content: center; overflow: hidden; font-weight: bold; }
-        .create-box { display: flex; flex-direction: column; gap: 10px; align-items: center; }
-        .create-prompt { flex: 1; text-align: left; color: var(--muted); background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 13px; width: 100%; outline: none; resize: none;}
-        .post-actions { display: flex; gap: 6px; justify-content: space-between; border-top: 1px solid var(--line); padding-top: 10px; margin-top: 12px; width: 100%; }
-        .action { flex: 1; background: transparent; border: none; color: var(--muted); border-radius: 10px; padding: 10px 2px; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px; }
-        .action:hover { background: var(--card); color: var(--text); }
-        .action-post { background: var(--accent); color: #fff; border-radius: 12px; }
-        .action-post:hover { background: var(--accent2); }
-        .search-container { margin-bottom: 16px; }
-        .search-bar { width: 100%; background: var(--panel); border: 1px solid var(--line); border-radius: 13px; padding: 12px; color: var(--text); outline: none; }
+        .nav-item {
+            background: transparent; border: none; color: var(--muted);
+            display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 11px;
+        }
+        .nav-item.active { color: var(--accent); }
+        .nav-icon { font-size: 20px; }
+
+        /* Feed Elements */
+        .create-box { display: flex; flex-direction: column; gap: 10px; }
+        .create-prompt { width: 100%; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 12px; color: var(--text); outline: none; resize: none; }
+        .action-post { background: var(--accent); color: #fff; border: none; border-radius: 12px; padding: 10px 20px; font-weight: 600; align-self: flex-end; }
         .post-card { background: var(--panel); border: 1px solid #ffffff0b; border-radius: 19px; padding: 16px; margin-bottom: 12px; }
         .post-header { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; }
         .post-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; font-weight: bold; color: white; }
         .post-meta { display: flex; flex-direction: column; }
         .post-author { font-weight: 750; font-size: 14px; }
-        .post-time { font-size: 11px; color: var(--muted); }
-        .post-text { font-size: 14px; line-height: 1.65; white-space: pre-wrap; overflow-wrap: anywhere; }
+        .post-text { font-size: 14px; line-height: 1.6; }
+
+        /* Chat Window UI */
+        .chat-history { height: 320px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; padding: 12px; background: var(--card); border-radius: 12px; border: 1px solid var(--line); }
+        .chat-input-row { display: flex; gap: 8px; }
+        .chat-field { flex: 1; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 10px; color: var(--text); outline: none; }
+        .chat-bubble { max-width: 75%; padding: 10px 14px; border-radius: 16px; font-size: 14px; line-height: 1.4; word-break: break-word; }
+        .chat-bubble.incoming { background: var(--line); align-self: flex-start; }
+        .chat-bubble.outgoing { background: var(--accent); color: white; align-self: flex-end; }
+
+        /* Profile Form */
+        .input-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+        .input-field { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px; color: var(--text); outline: none; }
     </style>
 </head>
 <body>
@@ -58,108 +75,125 @@
         <div class="brand">Vantry</div>
     </header>
 
-    <main class="main">
-        <!-- Stories Section -->
-        <div class="stories">
-            <div>
-                <div class="story-ring"><div class="story-inner">V</div></div>
-            </div>
-        </div>
-
-        <!-- Create Post Box -->
-        <div class="cardbackground">
-            <div class="create-box">
-                <textarea id="post-input" class="create-prompt" rows="2" placeholder="What's on your mind?"></textarea>
-                <div class="post-actions">
-                    <button class="action">🖼️ Photo</button>
-                    <button class="action">🎥 Video</button>
-                    <button id="submit-post" class="action action-post">➕ Post</button>
+    <main class="main-content">
+        
+        <!-- PAGE 1: HOME WALL FEED -->
+        <section id="page-feed" class="page-view active">
+            <div class="cardbackground">
+                <div class="create-box">
+                    <textarea id="post-input" class="create-prompt" rows="2" placeholder="What's on your mind?"></textarea>
+                    <button id="submit-post" class="action-post">➕ Post</button>
                 </div>
             </div>
-        </div>
+            <h3>Latest posts</h3>
+            <div id="posts-container"></div>
+        </section>
 
-        <!-- Search Feed -->
-        <div class="search-container">
-            <input type="text" class="search-bar" placeholder="Search posts and people...">
-        </div>
+        <!-- PAGE 2: LIVE CHATROOM -->
+        <section id="page-chats" class="page-view">
+            <h3>Global Chatroom</h3>
+            <div class="cardbackground">
+                <div id="chat-window" class="chat-history"></div>
+                <div class="chat-input-row">
+                    <input type="text" id="chat-input" class="chat-field" placeholder="Type a message...">
+                    <button id="submit-chat" class="action-post">Send</button>
+                </div>
+            </div>
+        </section>
 
-        <h3>Latest posts</h3>
-        
-        <!-- Live Post Feed Container -->
-        <div id="posts-feed"></div>
+        <!-- PAGE 3: USER PROFILES -->
+        <section id="page-profile" class="page-view">
+            <h3>Your Profile</h3>
+            <div class="cardbackground">
+                <div class="input-group">
+                    <label style="color: var(--muted); font-size: 13px;">Display Name</label>
+                    <input type="text" id="profile-name-input" class="input-field" placeholder="Set your username...">
+                </div>
+                <button id="save-profile" class="action-post" style="width: 100%;">Update Username</button>
+            </div>
+        </section>
+
     </main>
 
-    <!-- FIREBASE SERVICES IMPLEMENTATION -->
+    <!-- Bottom Tab Navigation Layout -->
+    <nav class="bottom-nav">
+        <button class="nav-item active" onclick="switchPage('page-feed', this)">
+            <span class="nav-icon">🏠</span><span>Home</span>
+        </button>
+        <button class="nav-item" onclick="switchPage('page-chats', this)">
+            <span class="nav-icon">💬</span><span>Chats</span>
+        </button>
+        <button class="nav-item" onclick="switchPage('page-profile', this)">
+            <span class="nav-icon">👤</span><span>Profile</span>
+        </button>
+    </nav>
+
+    <!-- FIREBASE PLATFORM IMPLEMENTATION -->
     <script type="module">
-        // Importing modules via browser-supported web URLs instead of npm strings
         import { initializeApp } from "https://gstatic.com";
-        import { getAnalytics } from "https://gstatic.com";
         import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://gstatic.com";
 
-        // Your exact Firebase project configurations
         const firebaseConfig = {
           apiKey: "AIzaSyBJXWMVvvHSlO4GWCnBQDeHXHxRtzLC2uA",
           authDomain: "vantry-200d3.firebaseapp.com",
           projectId: "vantry-200d3",
           storageBucket: "vantry-200d3.firebasestorage.app",
           messagingSenderId: "787639375643",
-          appId: "1:787639375643:web:5056ecb877eeedcdf965be",
-          measurementId: "G-8NNJPV20D8"
+          appId: "1:787639375643:web:5056ecb877eeedcdf965be"
         };
 
-        // Initialize Firebase instances
         const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
         const db = getFirestore(app);
 
-        // Bind interactive user interface text areas
+        // Assign a random default username so users look distinct from each other right away
+        let currentUser = localStorage.getItem('vantry_user') || 'User_' + Math.floor(Math.random() * 9000 + 1000);
+        document.getElementById('profile-name-input').value = currentUser;
+
+        // View router functionality
+        window.switchPage = function(pageId, buttonElement) {
+            document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            buttonElement.classList.add('active');
+        }
+
+        // Save username configuration
+        document.getElementById('save-profile').addEventListener('click', () => {
+            const enteredName = document.getElementById('profile-name-input').value.trim();
+            if(enteredName) {
+                currentUser = enteredName;
+                localStorage.setItem('vantry_user', enteredName);
+                alert('Username updated to: ' + enteredName);
+            }
+        });
+
+        // ==================== TIMELINE CODE BLOCK ====================
         const postInput = document.getElementById('post-input');
         const submitPost = document.getElementById('submit-post');
-        const postsFeed = document.getElementById('posts-feed');
+        const postsContainer = document.getElementById('posts-container');
 
-        // Click event listener script to send posts up to Firestore
-        async function sendPost() {
+        submitPost.addEventListener('click', async () => {
             const text = postInput.value.trim();
             if (text !== "") {
                 try {
                     await addDoc(collection(db, "posts"), {
                         content: text,
                         timestamp: new Date(),
-                        author: "Vantry User" 
+                        author: currentUser
                     });
-                    postInput.value = ""; 
-                } catch (error) {
-                    console.error("Error publishing post: ", error);
-                }
+                    postInput.value = "";
+                } catch(e) { console.error("Database block error: ", e); }
             }
-        }
-
-        submitPost.addEventListener('click', sendPost);
-
-        // Realtime sync listener setup to feed display updates down immediately
-        const postsQuery = query(collection(db, "posts"), orderBy("timestamp", "desc"));
-        onSnapshot(postsQuery, (snapshot) => {
-            postsFeed.innerHTML = ""; 
-            
-            snapshot.forEach((doc) => {
-                const data = doc.data();
-                
-                const postCard = document.createElement('div');
-                postCard.classList.add('post-card');
-                
-                postCard.innerHTML = `
-                    <div class="post-header">
-                        <div class="post-avatar">${data.author ? data.author.charAt(0) : 'U'}</div>
-                        <div class="post-meta">
-                            <span class="post-author">${data.author || 'Anonymous'}</span>
-                            <span class="post-time">Just now</span>
-                        </div>
-                    </div>
-                    <div class="post-text">${data.content}</div>
-                `;
-                postsFeed.appendChild(postCard);
-            });
         });
-    </script>
-</body>
-</html>
+
+        onSnapshot(query(collection(db, "posts"), orderBy("timestamp", "desc")), (snap) => {
+            postsContainer.innerHTML = "";
+            snap.forEach(doc => {
+                const data = doc.data();
+                const card = document.createElement('div');
+                card.classList.add('post-card');
+                card.innerHTML = `
+                    <div class="post-header">
+                        <div class="post-avatar">${data.author ? data.author.charAt(0).toUpperCase() : 'U'}</div>
+                        <div class="post-meta">
+  
