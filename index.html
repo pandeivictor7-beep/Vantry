@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -45,7 +45,7 @@
         .nav-item.active { color: var(--accent); }
         .nav-icon { font-size: 20px; }
 
-        /* Feed Elements */
+        /* Feed Specific UI Elements */
         .create-box { display: flex; flex-direction: column; gap: 10px; }
         .create-prompt { width: 100%; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 12px; color: var(--text); outline: none; resize: none; }
         .action-post { background: var(--accent); color: #fff; border: none; border-radius: 12px; padding: 10px 20px; font-weight: 600; align-self: flex-end; }
@@ -56,7 +56,7 @@
         .post-author { font-weight: 750; font-size: 14px; }
         .post-text { font-size: 14px; line-height: 1.6; }
 
-        /* Chat Window UI */
+        /* Chat UI Systems Layout */
         .chat-history { height: 320px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; padding: 12px; background: var(--card); border-radius: 12px; border: 1px solid var(--line); }
         .chat-input-row { display: flex; gap: 8px; }
         .chat-field { flex: 1; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 10px; color: var(--text); outline: none; }
@@ -64,7 +64,7 @@
         .chat-bubble.incoming { background: var(--line); align-self: flex-start; }
         .chat-bubble.outgoing { background: var(--accent); color: white; align-self: flex-end; }
 
-        /* Profile Form */
+        /* Profile Configuration Styling Forms */
         .input-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
         .input-field { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px; color: var(--text); outline: none; }
     </style>
@@ -77,7 +77,7 @@
 
     <main class="main-content">
         
-        <!-- PAGE 1: HOME WALL FEED -->
+        <!-- MODULE PAGE 1: SYSTEM HOME FEED -->
         <section id="page-feed" class="page-view active">
             <div class="cardbackground">
                 <div class="create-box">
@@ -89,7 +89,7 @@
             <div id="posts-container"></div>
         </section>
 
-        <!-- PAGE 2: LIVE CHATROOM -->
+        <!-- MODULE PAGE 2: SYNCED GLOBAL CHATROOM -->
         <section id="page-chats" class="page-view">
             <h3>Global Chatroom</h3>
             <div class="cardbackground">
@@ -101,21 +101,21 @@
             </div>
         </section>
 
-        <!-- PAGE 3: USER PROFILES -->
+        <!-- MODULE PAGE 3: USER PROFILES -->
         <section id="page-profile" class="page-view">
             <h3>Your Profile</h3>
             <div class="cardbackground">
                 <div class="input-group">
                     <label style="color: var(--muted); font-size: 13px;">Display Name</label>
-                    <input type="text" id="profile-name-input" class="input-field" placeholder="Set your username...">
+                    <input type="text" id="profile-name-input" class="input-field" placeholder="Choose a username...">
                 </div>
-                <button id="save-profile" class="action-post" style="width: 100%;">Update Username</button>
+                <button id="save-profile" class="action-post" style="width: 100%;">Update Username Info</button>
             </div>
         </section>
 
     </main>
 
-    <!-- Bottom Tab Navigation Layout -->
+    <!-- Bottom Matrix Navigation Footers -->
     <nav class="bottom-nav">
         <button class="nav-item active" onclick="switchPage('page-feed', this)">
             <span class="nav-icon">🏠</span><span>Home</span>
@@ -128,14 +128,15 @@
         </button>
     </nav>
 
-    <!-- FIREBASE PLATFORM IMPLEMENTATION -->
+    <!-- FIREBASE AND SCRIPT HANDLERS BLOCK -->
     <script type="module">
         import { initializeApp } from "https://gstatic.com";
         import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://gstatic.com";
 
+        // Fixed verified matching parameter maps
         const firebaseConfig = {
           apiKey: "AIzaSyBJXWMVvvHSlO4GWCnBQDeHXHxRtzLC2uA",
-          authDomain: "vantry-200d3.firebaseapp.com",
+          authDomain: "://firebaseapp.com",
           projectId: "vantry-200d3",
           storageBucket: "vantry-200d3.firebasestorage.app",
           messagingSenderId: "787639375643",
@@ -145,11 +146,11 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Assign a random default username so users look distinct from each other right away
+        // Assign random user handles out of memory caches to differentiate multi-user nodes
         let currentUser = localStorage.getItem('vantry_user') || 'User_' + Math.floor(Math.random() * 9000 + 1000);
         document.getElementById('profile-name-input').value = currentUser;
 
-        // View router functionality
+        // Dynamic routing configurations
         window.switchPage = function(pageId, buttonElement) {
             document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
@@ -157,17 +158,17 @@
             buttonElement.classList.add('active');
         }
 
-        // Save username configuration
+        // Save User Details Interface Event Wiring
         document.getElementById('save-profile').addEventListener('click', () => {
             const enteredName = document.getElementById('profile-name-input').value.trim();
             if(enteredName) {
                 currentUser = enteredName;
                 localStorage.setItem('vantry_user', enteredName);
-                alert('Username updated to: ' + enteredName);
+                alert('Username verified as: ' + enteredName);
             }
         });
 
-        // ==================== TIMELINE CODE BLOCK ====================
+        // ==================== SYSTEM FEED RUNNER ====================
         const postInput = document.getElementById('post-input');
         const submitPost = document.getElementById('submit-post');
         const postsContainer = document.getElementById('posts-container');
@@ -182,7 +183,7 @@
                         author: currentUser
                     });
                     postInput.value = "";
-                } catch(e) { console.error("Database block error: ", e); }
+                } catch(e) { console.error("Database connection block: ", e); }
             }
         });
 
@@ -194,6 +195,4 @@
                 card.classList.add('post-card');
                 card.innerHTML = `
                     <div class="post-header">
-                        <div class="post-avatar">${data.author ? data.author.charAt(0).toUpperCase() : 'U'}</div>
-                        <div class="post-meta">
-  
+        
